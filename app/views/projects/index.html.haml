@@ -1,0 +1,71 @@
+.content_area
+  .content_header
+    %a{href: "#"}
+      Show Project Details
+      = image_tag "arrow.png"
+  .tab_bg  
+  .tabs
+    %ul
+      %li
+        = link_to "All Projects", projects_path, :class => "active"
+      %li
+        %a{href: "#"} My Projects
+      %li
+        %a{href: "#"} Upcoming Projects
+      %li
+        %a{href: "#"} Completed Projects
+  .clearfix
+  - @projects.each do |project|
+    #slideToggle.msgactive.msg
+      .profile_pic
+        = image_tag current_user.avatar.tiny.url
+      .time_btn
+        %a{href: "#"}
+          = project.created_at.strftime("%H:%M " '%d.%m.%Y')
+      .content_text
+        %h3
+          = project.project_title
+        %p
+          = truncate("#{project.project_details}", :length => 70)
+      .new_msgs
+        %h3 2
+        %a{href: "#"} New Messages
+        %p
+          = project.project_starts_on
+        %p
+          = project.project_ends_on
+      .drop_arrow
+        %a{href: "#"} arrow
+    .info_main_box
+      .info
+        = project.invite_people
+        %textarea{cols: "50", rows: "4"}
+          = project.project_details
+      .info
+        = project.status
+        .attch_box
+          .attach
+            %a{href: "#"} Task_New_layout.PNG (48KB)
+          .attach
+            %a.file_attach{accept: "image/*", href: "#"} Attach New File
+      .info
+        =image_tag "chat.png"
+        .chat_box
+          %textarea{cols: "50", rows: "1"}
+          %a{href: "#"}
+            = image_tag "attachment.png"
+        .clearfix
+
+:javascript
+  $("#slideToggle").click(function () {
+    $('.info_main_box').slideToggle(600);
+  }); 
+  $("#slideToggle1").click(function () {
+    $('.info_main_box1').slideToggle(600);
+  });
+  $(window).load(function(){
+    $("[data-toggle]").click(function() {
+      var toggle_el = $(this).data("toggle");
+      $(toggle_el).toggleClass("open-sidebar");
+    });
+  });
