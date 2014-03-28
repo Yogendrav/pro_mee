@@ -25,6 +25,7 @@ class ProjectsController < ApplicationController
 
 	def create
 		@project = current_user.projects.create(params[:project])
+		debugger
 		if @project
 			redirect_to projects_path
 		else
