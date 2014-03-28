@@ -23,19 +23,20 @@
             .controls
               = f.text_field :project_starts_on, format: :long
               %td#startDate 2012-02-06
-              #alert.alert.alert-error{style: "display: block;"}
+              / #alert.alert.alert-error{style: "display: block;"}
           .control-group
             = f.label(:ends_at, :class => "control-label")
             .controls
               = f.text_field :project_ends_on, format: :long
               %td#endDate 2012-02-25
-              #alert.alert.alert-error{style: "display: block;"}
+              / #alert.alert.alert-error{style: "display: block;"}
               
           .control-group
             = f.label(:status, :class => "control-label")
             .controls.bootstrap-switch.bootstrap-switch-id-animated-switch.bootstrap-switch-on.bootstrap-switch-animate
               %div
-                %input#animated-switch{checked: "checked", "data-animated" => "true", type: "checkbox"}
+                %input#animated-switch{checked: "checked", "data-animated" => "true", type: "checkbox"}   
+                = f.hidden_field :status
                 =# f.check_box :status, collection: %w[A B]
                 // %span.bootstrap-switch-handle-on.bootstrap-switch-primary ON
                 // %label{for: "animated-switch"} 
@@ -46,10 +47,18 @@
               = f.select :invite_people, @users.reject {|user| user == current_user}.map(&:first_name), type: "checkbox"
           .modal-footer{:style => "text-align:center"}
             %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
-            = f.submit "Create Project", :class => "btn btn-primary"
+            = f.submit "Create Project", :class => "btn btn-primary save_project"
 
 :javascript
   $(document).ready(function(){
+    $(".save_project").on('click',function(){
+      if($(".bootstrap-switch-on").length >1){
+        $("#project_status").attr("value","pending")
+      }else{
+        $("#project_status").attr("value","running")
+      }
+    })
+
     var startDate = new Date(2012,1,20);
     var endDate = new Date(2012,1,25);
     $('#project_project_starts_on').datepicker({format: 'yyyy-mm-dd'})

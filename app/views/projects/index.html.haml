@@ -9,7 +9,7 @@
       %li
         = link_to "All Projects", projects_path, :class => "active"
       %li
-        %a{href: "#"} My Projects
+        %a{href: projects_path(:with=>"my_project")} My Projects
       %li
         %a{href: "#"} Upcoming Projects
       %li

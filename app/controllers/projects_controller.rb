@@ -1,7 +1,11 @@
 class ProjectsController < ApplicationController
 	before_filter :authenticate_user!
 	def index
-		@projects = Project.all
+		if params[:with] =="my_project"
+		  @projects = current_user.projects
+		else
+				@projects = Project.all
+    end	
 	end
 
 	def new
@@ -20,9 +24,8 @@ class ProjectsController < ApplicationController
 	end
 
 	def create
-		@project = Project.new(params[:project])
-		debugger
-		if @project.save
+		@project = current_user.projects.create(params[:project])
+		if @project
 			redirect_to projects_path
 		else
 			render 'new'

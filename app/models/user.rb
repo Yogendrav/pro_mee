@@ -8,6 +8,5 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :avatar, :contact_no, :country, :state, :city, :address, :zipcode
   # attr_accessible :title, :body
   mount_uploader :avatar, AvatarUploader
-  has_many :project_managements
-  has_many :projects, through: :project_managements
+  has_many :projects
 end
